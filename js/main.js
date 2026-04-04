@@ -61,7 +61,7 @@
   if (hero) {
     var heroTest = new Image();
     heroTest.onload = function () {
-      hero.style.backgroundImage = "url('images/hero.jpg')";
+      hero.style.background = "url('images/hero.jpg') center/cover no-repeat";
     };
     heroTest.src = 'images/hero.jpg';
   }
