@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3d2b1a"/>
+      <stop offset="100%" stop-color="#2a1d10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <g opacity="0.12">
+    <line x1="0" y1="50" x2="600" y2="55" stroke="#D4A843" stroke-width="0.5"/>
+    <line x1="0" y1="120" x2="600" y2="115" stroke="#D4A843" stroke-width="0.3"/>
+    <line x1="0" y1="190" x2="600" y2="195" stroke="#D4A843" stroke-width="0.5"/>
+    <line x1="0" y1="260" x2="600" y2="255" stroke="#D4A843" stroke-width="0.4"/>
+    <line x1="0" y1="330" x2="600" y2="335" stroke="#D4A843" stroke-width="0.3"/>
+  </g>
+  <text x="300" y="190" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#D4A843" opacity="0.5">PLACEHOLDER</text>
+  <text x="300" y="220" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#D4A843" opacity="0.4">Classical / Nylon String</text>
+  <text x="300" y="250" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#D4A843" opacity="0.3">600x400 recommended</text>
+</svg>
