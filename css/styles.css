@@ -166,7 +166,8 @@ section { padding: 90px 0 80px; }
   text-align: center;
 }
 .sizes-intro-image img {
-  max-width: 100%; height: auto;
+  max-width: min(720px, 100%); height: auto;
+  display: block; margin: 0 auto;
   border-radius: 8px;
   box-shadow: 0 6px 28px rgba(44,26,14,0.13);
   border: 1px solid #e8d8b8;
