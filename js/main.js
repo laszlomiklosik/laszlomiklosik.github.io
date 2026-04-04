@@ -45,6 +45,27 @@
     });
   }
 
+  // Image upgrade: try .jpg, fall back to .svg
+  document.querySelectorAll('.card img').forEach(function (img) {
+    var svgSrc = img.getAttribute('src');
+    if (svgSrc && svgSrc.endsWith('.svg')) {
+      var jpgSrc = svgSrc.replace(/\.svg$/, '.jpg');
+      var test = new Image();
+      test.onload = function () { img.src = jpgSrc; };
+      test.src = jpgSrc;
+    }
+  });
+
+  // Hero background: try .jpg, fall back to .svg
+  var hero = document.getElementById('hero');
+  if (hero) {
+    var heroTest = new Image();
+    heroTest.onload = function () {
+      hero.style.backgroundImage = "url('images/hero.jpg')";
+    };
+    heroTest.src = 'images/hero.jpg';
+  }
+
   // Fade-in sections on scroll
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
