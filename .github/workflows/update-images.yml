@@ -1,0 +1,66 @@
+name: Update image references
+
+on:
+  push:
+    paths:
+      - 'images/*.jpg'
+      - 'images/*.jpeg'
+      - 'images/*.png'
+      - 'images/*.webp'
+
+jobs:
+  update-references:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Detect new images and update references
+        run: |
+          changed=false
+
+          # For each jpg in images/, check if the code still references the .svg version
+          for img in images/*.jpg images/*.jpeg; do
+            [ -f "$img" ] || continue
+            # Get the base name without extension (e.g. "classical")
+            base=$(basename "$img" | sed 's/\.\(jpg\|jpeg\)$//')
+
+            # Update _includes/types.html: replace .svg with .jpg for this image
+            if grep -q "${base}\.svg" _includes/types.html 2>/dev/null; then
+              sed -i "s/${base}\.svg/${base}.jpg/g" _includes/types.html
+              echo "Updated types.html: ${base}.svg -> ${base}.jpg"
+              changed=true
+            fi
+
+            # Update css/styles.css: replace .svg with .jpg for this image
+            if grep -q "${base}\.svg" css/styles.css 2>/dev/null; then
+              sed -i "s/${base}\.svg/${base}.jpg/g" css/styles.css
+              echo "Updated styles.css: ${base}.svg -> ${base}.jpg"
+              changed=true
+            fi
+          done
+
+          # Remove .svg placeholders that now have a .jpg replacement
+          for svg in images/*.svg; do
+            [ -f "$svg" ] || continue
+            base=$(basename "$svg" .svg)
+            if [ -f "images/${base}.jpg" ] || [ -f "images/${base}.jpeg" ]; then
+              rm "$svg"
+              echo "Removed placeholder: $svg"
+              changed=true
+            fi
+          done
+
+          echo "changed=$changed" >> "$GITHUB_ENV"
+
+      - name: Commit and push changes
+        if: env.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Update image references from SVG placeholders to uploaded JPGs"
+          git push
