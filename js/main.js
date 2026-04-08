@@ -45,25 +45,28 @@
     });
   }
 
-  // Image upgrade: try .jpg, fall back to .svg
+  // Image upgrade: try .jpg directly, fall back to .svg on error
   document.querySelectorAll('.card img').forEach(function (img) {
     var svgSrc = img.getAttribute('src');
     if (svgSrc && svgSrc.endsWith('.svg')) {
       var jpgSrc = svgSrc.replace(/\.svg$/, '.jpg');
-      var test = new Image();
-      test.onload = function () { img.src = jpgSrc; };
-      test.src = jpgSrc;
+      img.onerror = function () {
+        img.onerror = null;
+        img.src = svgSrc;
+      };
+      img.src = jpgSrc;
     }
   });
 
-  // Hero background: try .jpg, fall back to .svg
+  // Hero background: try .jpg directly, fall back to .svg on error
   var hero = document.getElementById('hero');
   if (hero) {
-    var heroTest = new Image();
-    heroTest.onload = function () {
+    var heroImg = new Image();
+    heroImg.onload = function () {
       hero.style.background = "url('images/hero.jpg') center/cover no-repeat";
     };
-    heroTest.src = 'images/hero.jpg';
+    heroImg.onerror = function () {};
+    heroImg.src = 'images/hero.jpg';
   }
 
   // Fade-in sections on scroll
